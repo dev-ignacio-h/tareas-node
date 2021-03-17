@@ -12,10 +12,8 @@ const main = async () => {
   const tasksDB = readDB();
 
   if (tasksDB) {
-     
+     tasks.loadTasksFromArray(tasksDB)
   }
-
-  await pausa()
 
   do {
     // print menu
@@ -27,11 +25,11 @@ const main = async () => {
         tasks.createTask(desc)
         break;
       case 2:
-        console.log(tasks.listArr);
+        tasks.listTasks()
         break;
     }
 
-    // saveDB(tasks.listArr)
+    saveDB(tasks.listArr)
     await pausa();
   } while (opt !== 0);
 };
