@@ -30,10 +30,32 @@ class Tasks {
   listTasks() {
     console.log();
     this.listArr.forEach((task, i) => {
-      const idx = `${i + 1}`.yellow;
+      const idx = `${i + 1}.`.yellow;
       const { desc, completeIn } = task;
       const state = completeIn ? 'Completada'.green : 'Pendiente'.red;
       console.log(`${idx} ${desc} :: ${state}`);
+    });
+  }
+
+  listCompletedPending(completed = true) {
+    console.log();
+    let counter = 0;
+    this.listArr.forEach((task) => {
+      const { desc, completeIn } = task;
+      const state = completeIn ? 'Completada'.green : 'Pendiente'.red;
+      if(completed) {
+        // mostrar completadas
+        if(completeIn) {
+          counter ++;
+          console.log(`${(`${counter}.`).yellow} ${desc} :: ${state}`);
+        }
+      } else {
+        // mostrar pendientes
+        if(!completeIn) {
+          counter ++;
+          console.log(`${(`${counter}.`).yellow} ${desc} :: ${state}`);
+        }
+      }
     });
   }
 }
