@@ -68,9 +68,9 @@ const readInput = async (message) => {
       name: 'desc',
       message,
       validate(value) {
-        if (value.length === 0){
+        if (value.length === 0) {
           return 'Por favor ingrese un valor';
-        } 
+        }
         return true;
       }
     }
@@ -80,8 +80,51 @@ const readInput = async (message) => {
   return desc;
 };
 
+const listTasksDelete = async (tasks = []) => {
+  const choices = tasks.map((task, i) => {
+    const index = `${i + 1}.`.yellow;
+    return {
+      value: task.id,
+      name: `${index} ${task.desc}`
+    };
+  });
+
+  choices.unshift({
+    value: 0,
+    name: '0.'.yellow + ' Cancelar'
+  })
+
+  const questions = [
+    {
+      type: 'list',
+      name: 'id',
+      message: 'Borrar',
+      choices
+    }
+  ]
+  const { id } = await inquirer.prompt(questions);
+  return id
+};
+
+const confirm = async (message) => {
+  const question = [
+    {
+      type: 'confirm',
+      name: 'ok',
+      message
+    }
+  ];
+
+  const { ok } = await inquirer.prompt(question);
+
+  return ok;
+}
+
+
 module.exports = {
   inquirerMenu,
   pausa,
-  readInput
+  readInput,
+  listTasksDelete,
+  confirm
 };

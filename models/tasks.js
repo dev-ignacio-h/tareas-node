@@ -16,6 +16,12 @@ class Tasks {
     this._list = {};
   }
 
+  deleteTask(id = '') {
+    if (this._list[id]) {
+      delete this._list[id];
+    }
+  }
+
   loadTasksFromArray(tasks = []) {
     tasks.forEach((task) => {
       this._list[task.id] = task;
@@ -43,17 +49,17 @@ class Tasks {
     this.listArr.forEach((task) => {
       const { desc, completeIn } = task;
       const state = completeIn ? 'Completada'.green : 'Pendiente'.red;
-      if(completed) {
+      if (completed) {
         // mostrar completadas
-        if(completeIn) {
-          counter ++;
-          console.log(`${(`${counter}.`).yellow} ${desc} :: ${state}`);
+        if (completeIn) {
+          counter++;
+          console.log(`${`${counter}.`.yellow} ${desc} :: ${state}`);
         }
       } else {
         // mostrar pendientes
-        if(!completeIn) {
-          counter ++;
-          console.log(`${(`${counter}.`).yellow} ${desc} :: ${state}`);
+        if (!completeIn) {
+          counter++;
+          console.log(`${`${counter}.`.yellow} ${desc} :: ${state}`);
         }
       }
     });
