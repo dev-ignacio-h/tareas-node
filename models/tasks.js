@@ -37,8 +37,8 @@ class Tasks {
     console.log();
     this.listArr.forEach((task, i) => {
       const idx = `${i + 1}.`.yellow;
-      const { desc, completeIn } = task;
-      const state = completeIn ? 'Completada'.green : 'Pendiente'.red;
+      const { desc, completedIn } = task;
+      const state = completedIn ? 'Completada'.green : 'Pendiente'.red;
       console.log(`${idx} ${desc} :: ${state}`);
     });
   }
@@ -47,20 +47,37 @@ class Tasks {
     console.log();
     let counter = 0;
     this.listArr.forEach((task) => {
-      const { desc, completeIn } = task;
-      const state = completeIn ? 'Completada'.green : 'Pendiente'.red;
+      const { desc, completedIn } = task;
+      const state = completedIn ? 'Completada'.green : 'Pendiente'.red;
       if (completed) {
         // mostrar completadas
-        if (completeIn) {
+        if (completedIn) {
           counter++;
-          console.log(`${`${counter}.`.yellow} ${desc} :: ${state}`);
+          console.log(
+            `${`${counter}.`.yellow} ${desc} :: ${completedIn.yellow}`
+          );
         }
       } else {
         // mostrar pendientes
-        if (!completeIn) {
+        if (!completedIn) {
           counter++;
           console.log(`${`${counter}.`.yellow} ${desc} :: ${state}`);
         }
+      }
+    });
+  }
+
+  toggleCompleted(ids = []) {
+    ids.forEach((id) => {
+      const task = this._list[id];
+      if (!task.completedIn) {
+        task.completedIn = new Date().toISOString();
+      }
+    });
+
+    this.listArr.forEach(({id}) => {
+      if (!ids.includes(id)) {
+        this._list[id].completedIn = null;
       }
     });
   }
